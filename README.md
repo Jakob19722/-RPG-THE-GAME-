@@ -1,5 +1,9 @@
 # -Endless Regressor-
 I will try to make a scene based rpg game with the help of a billion tutorials that i will list here:
+
+
+#will fix it later
+
 https://www.youtube.com/watch?v=crUF36OkGDw&t=631s #pygame setup
 https://www.youtube.com/watch?v=Vlolidaoiak&list=PLjcN1EyupaQnvpv61iriF8Ax9dKra-Mh
 Z #här fick jag huvud iden ifrån, #pygame rpg tutorial
