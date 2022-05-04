@@ -5,8 +5,9 @@ import random
 import time
 import keyboard #skriv vad detta gör sen  
 from functools import *
+from PIL import *
 
-from sympy import var #skriv vad detta
+from sympy import false, var #skriv vad detta
 from draws import *    #skriv vad detta gör sen  
 from OpenGL.GL import *   #skriv vad detta gör sen 
 from OpenGL.GLU import * #skriv vad detta gör sen
@@ -27,8 +28,6 @@ pygame.mixer.init()
 BOTTOM_PANEL = 150
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 400 + BOTTOM_PANEL
-ACCELREATION = 0.3 #hittade detta specifika nummer online
-FRICTION = -0.10 #hittade detta specifika nummer online
 COUNT = 0
 FPS = 60
 VEL = 10
@@ -112,28 +111,7 @@ class Knight(pygame.sprite.Sprite):
 
     def jumping(self):
         pass
-
-    def update(self): #REMAKE THIS WHOLE THING LATER
-        if abs(self.velocity.x) > 0.3:
-            self.running = True
-        else:
-            self.running = False
  
-     
-        pressed_keys = pygame.key.get_pressed()
- 
-     
-        if pressed_keys[K_LEFT]:
-            self.acceleration.x = -ACCELREATION
-        if pressed_keys[K_RIGHT]:
-            self.acceleration.x = ACCELREATION
- 
-    
-        self.acceleration.x += self.velocity.x * FRICTION
-        self.velocity += self.acceleration
-        self.position += self.velocity + 0.5 * self.acceleration
-        self.rect.center = self.position
-
     def animations(self):
         pass
 
@@ -158,13 +136,13 @@ class Mob1(pygame.sprite.Sprite):
         self.hide = False
 
 class GameName:
-    def __init__(self, username):
-        self.username = username
+    font = pygame.font.SysFont("img/Fonts/VT323_Regular.ttf", 30)
+    
+    @classmethod
+    def draw(cls, surf, username, *args):       
+        text_surf = cls.font.render(str(username), True, 'white')
+        surf.blit(text_surf, (180, 417))
         
-    def gamename(self, username):
-        self.username = username
-        print(username.get())
-        return
 
 class Intro(pygame.sprite.Sprite):
     def __init__(self):
@@ -196,9 +174,9 @@ class StageManager():
                             
 
     def stage_fixer1(self):
-        self.tkwindow = Tk() #så jag kan kalla på tkinter
-        self.tkwindow.title("NAME") #titel
-        self.tkwindow.geometry("300x200") #skapar ett window, basically samma som pygame.display.set_mode 
+        self.tkwindow = Tk() 
+        self.tkwindow.title("NAME") 
+        self.tkwindow.geometry("300x200") 
         self.tkwindow.iconbitmap("img/GameObjects/icon.ico")
         btn1 = Button(self.tkwindow, text="Are you ready to start?", fg="blue", command = self.scene_4)  #command basically triggar def scene:1(): när man klickar på knappen
         btn1.place(x=80, y=150)
@@ -214,13 +192,21 @@ class StageManager():
     #username label and text entry box
         usernameLabel = Label(self.tkwindow, text="Enter a username:").grid(row=0, column=0)
         username = StringVar()
-        usernameEntry = Entry(self.tkwindow, textvariable=username).grid(row=0, column=1)  
-        GameName.gamename = partial(GameName.gamename, username)                                                                                                                            
+        usernameEntry = Entry(self.tkwindow, textvariable=username).grid(row=0, column=1)                                                                                                                        
         
-        all_commands = lambda:[GameName.gamename(username), StageManager.scene_2(self)]
-        btn1 = Button(self.tkwindow, text="Are you ready to start?", fg="blue", command = all_commands)  #command basically triggar def scene:1(): när man klickar på knappen
+      
+        btn1 = Button(self.tkwindow, text="Are you ready to start?", fg="blue", command = self.scene_2)  
         btn1.place(x=80, y=150)
-        self.tkwindow.mainloop()                    
+        self.tkwindow.mainloop()
+        return username.get()        
+
+    def stage_fixer3(self):
+        self.tkwindow = Tk()
+        self.tkwindow.title("Welcome Hero...") 
+        self.tkwindow.geometry("300x200") 
+        self.tkwindow.iconbitmap("img/GameObjects/icon.ico")
+        btn1 = Button(self.tkwindow, text="Are you ready to start?", fg="blue", command = self.scene_3) 
+        btn1.place(x=80, y=150)        
                    
 
 
@@ -228,7 +214,7 @@ class StageManager():
         intro.introbg()
         intro.logoimg() 
         intro.presstocontinue()
-        GameName().gamename()
+        GameName().draw()
         bg.hide = True
         gnd.hide = True  
         knight.hide = True 
@@ -259,11 +245,22 @@ class StageManager():
         gnd.hide = True
         knight.hide = True
 
-class SceneOne(pygame.sprite.Sprite):
-    def __init__(self):
-        self.hide = False
-        super().__init__()
+    def scene_3(self):
+        self.tkwindow.destroy()
+        ball = pygame.Rect(0,0,10,10)
+        screen.fill((0,0,0))
+        pygame.draw.circle(screen,(255,255,255),ball.center,5)
+        ball.move_ip(1,1) 
+        bg.hide = True
+        gnd.hide = True
+        pnl.hide = False
+        knight.hide = True
+        intro.hide = True
+        s1.hide = True
+        s2.hide = False
 
+
+class SceneOne(pygame.sprite.Sprite):
     def sceneonebg(self):
         if self.hide == False:
             screen.blit(scene_1_img, (0, 0))
@@ -274,23 +271,49 @@ class SceneOne(pygame.sprite.Sprite):
 
     def paragraph(self):
         if self.hide == False:
-            font = pygame.font.SysFont("rand9K Pixel.ttf", 50)
-            wiztext = font.render(str(""), True, (255, 255, 255))
-            screen.blit(wiztext, (140, 160))
-              
+            font = pygame.font.SysFont("img/Fonts/VT323_Regular.ttf", 30)
+            wiztext = font.render(str("Welcome"), True, (255, 255, 255))
+            screen.blit(wiztext, (85, 417))
+    
+    def paragraph2(self):
+        if self.hide == False:
+            font = pygame.font.SysFont("img/Fonts/VT323_Regular.ttf", 30)
+            wiztext2 = font.render(str("You have been summoned to the world "), True, (255, 255, 255))
+            wiztext3 = font.render(str("of Ruscandel in order to defeat the"), True, (255, 255, 255))
+            wiztext4 = font.render(str("evil scheming Demon King, Baran. "), True, (255, 255, 255))
+            wiztext5 = font.render(str("365 Days Remaining."), True, (128, 0, 0))
+            wiztext6 = font.render(str("Press Space..."), True, (0, 0, 0))
+            screen.blit(wiztext2, (15, 443))
+            screen.blit(wiztext3, (15, 463))
+            screen.blit(wiztext4, (15, 483))
+            screen.blit(wiztext5, (15, 503))
+            screen.blit(wiztext6, (235, 503))
+
+
+class Scenetwo(pygame.sprite.Sprite):
+    def __init__(self):
+        self.SHOWTK = False
+    
+    def scenetwobg(self):
+        if self.hide == False:
+            font = pygame.font.SysFont("img/Fonts/VT323_Regular.ttf", 30)
+            text1 = font.render(str("TUTORIAL WILL COMMENCE"), True, (255, 255, 255))
+    
 
 #bryter most standard(?)
 bg = Background()
 gnd = GroundLevel()  
-pnl = Panel()         
+pnl = Panel()       
 knight = Knight()
 mgr = StageManager()
 intro = Intro()
 s1 = SceneOne()
+s2 = Scenetwo()
 
 #game loop
 if __name__ == "__main__":
     while True:
+        s2.SHOWTK = True
         mgr.SHOWTK = True
         bg.draw_bg1()
         gnd.draw_gnd()
@@ -310,12 +333,16 @@ if __name__ == "__main__":
               pass 
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_SPACE:
-                    mgr.stage_fixer2()
+                if event.key == pygame.K_SPACE and s2.SHOWTK == True:
+                    s2.SHOWTK = False
+                    usrname = mgr.stage_fixer2()
                     s1.sceneonebg()
                     pnl.drawpanel()
                     s1.oldwiz()
                     s1.paragraph()
+                    s1.paragraph2()
+                    GameName.draw(screen, usrname)
+                         
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN and mgr.SHOWTK == True: 
                     keyboard.block_key("return")       
@@ -326,5 +353,5 @@ if __name__ == "__main__":
                     knight.knight_drawing()  
                     
 
-        pygame.display.flip()
+        pygame.display.flip()               
         pygame.display.update()
