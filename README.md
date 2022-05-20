@@ -6,13 +6,13 @@
 
 ## <h2><strong><span style="color:95f252">Description</span> 
 
-***My game is called Endless Regressor and is solely made in python (with libraries). The purpose of making this game is so that I can learn how to make a game with easy visuals, sounds and understand how to code a game even if its just the basics of the basics. I wanted to learn pygame and tkinter to a certain extern, how to handle files and make a code as effective as possible, without doing it in a rundabout way. For the players point of view the game's purpose is to play out a character, level up, get stronger while fighting monster and progressing through the questline. I already want to highlight that I was using multiple tutorials and especially one that I followed with much copying and this will be acknowledged later in this readme. The final and most important thing I want to highlight is that If i would be able to change on thing from the beginning, I would change the way I clear the scenes with screen.fill("black") to clear the canvas and then update them each frame so they will not leave afterimages. I was able to come around this on a very ineffective way but it would be prefered to not do it like I did but to do it the normal, good way.***
+My game is called Endless Regressor and is solely made in python (with libraries). The purpose of making this game is so that I can learn how to make a game with easy visuals, sounds and understand how to code a game even if its just the basics of the basics. I wanted to learn pygame and tkinter to a certain extern, how to handle files and make a code as effective as possible, without doing it in a rundabout way. For the players point of view the game's purpose is to play out a character, level up, get stronger while fighting monster and progressing through the questline. I already want to highlight that I was using multiple tutorials and especially one that I followed with much copying and this will be acknowledged later in this readme. The final and most important thing I want to highlight is that If i would be able to change on thing from the beginning, I would change the way I clear the scenes with screen.fill("black") to clear the canvas and then update them each frame so they will not leave afterimages. I was able to come around this on a very ineffective way but it would be prefered to not do it like I did but to do it the normal, good way.
 
 
 
 ## <h2><strong><span style="color:95f252">Technology/Languages</span> 
 
-***As mentioned earlier, I have only used python as that was the instructions for the game and markdown in this readme. I have used the following modules, libraries: pygame, system, random, time, PIL and tkinter. Pygame is used as the main gui which was somewhat difficult to grasp in the beginning but I would say that I can use it on a basic level without googling too much now. System is simply used for quitting the game, time is used for timing, tkinter which is a GUI I now found out to be extremely great as pygame has somewhat weird feautures that I do not like (disable keybuttons for whole pc and horrible userinput etc.) And lastly I used PIL which is a very great tool for drawing text over images without overcomplicating in tkinter.***
+*As mentioned earlier, I have only used python as that was the instructions for the game and markdown in this readme. I have used the following modules, libraries: pygame, system, random, time, PIL and tkinter. Pygame is used as the main gui which was somewhat difficult to grasp in the beginning but I would say that I can use it on a basic level without googling too much now. System is simply used for quitting the game, time is used for timing, tkinter which is a GUI I now found out to be extremely great as pygame has somewhat weird feautures that I do not like (disable keybuttons for whole pc and horrible userinput etc.) And lastly I used PIL which is a very great tool for drawing text over images without overcomplicating in tkinter.
 
 - <span style="color:#00CED1">Python</span>
 - <span style="color:#00CED1">Markdown</span>
@@ -31,7 +31,7 @@ JAG
 
 ## <h2><strong><span style="color:95f252">Installation</span> 
 
-***Guide on how to install the following requirements for my python game.***
+Guide on how to install the following requirements for my python game.
 
 ***Do the following 🡻***  
 
@@ -59,11 +59,11 @@ pip install sympy
 
 ## <h2><strong><span style="color:95f252">Code Conventions</span> 
 
-***This game has a clear structure for saving images and music, etc. These all files are contained in the maingame file followed with the necessary python files. These files "img" and "music" has their own respective files with  for examples backgrounds, characters. It just goes on. The python code is an attempt of following the PEP-8 Standards.***
+This game has a clear structure for saving images and music, etc. These all files are contained in the maingame file followed with the necessary python files. These files "img" and "music" has their own respective files with  for examples backgrounds, characters. It just goes on. The python code is an attempt of following the PEP-8 Standards.
 
 ## <h2><strong><span style="color:95f252">Usage</span>     
 
-***You can use this game to play on your free time or take inspiration from to make your own game. Althoug I do not see any point of playing this game at all.....***
+You can use this game to play on your free time or take inspiration from to make your own game.
 
 ## <h2><strong><span style="color:95f252">Example</span> 
 
