@@ -19,7 +19,7 @@ As mentioned earlier, I have only used python as that was the instructions for t
 - <span style="color:#00CED1">HTML</span>
 - <span style="color:#00CED1">CSS</span>
 ## <h2><strong><span style="color:95f252">Requirements</span> 
-JAG
+
 ***All requirements are listed down below***
 
 - <span style="color:#00CED1">Python 3.9.5</span>
