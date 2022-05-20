@@ -12,7 +12,7 @@ My game is called Endless Regressor and is solely made in python (with libraries
 
 ## <h2><strong><span style="color:95f252">Technology/Languages</span> 
 
-*As mentioned earlier, I have only used python as that was the instructions for the game and markdown in this readme. I have used the following modules, libraries: pygame, system, random, time, PIL and tkinter. Pygame is used as the main gui which was somewhat difficult to grasp in the beginning but I would say that I can use it on a basic level without googling too much now. System is simply used for quitting the game, time is used for timing, tkinter which is a GUI I now found out to be extremely great as pygame has somewhat weird feautures that I do not like (disable keybuttons for whole pc and horrible userinput etc.) And lastly I used PIL which is a very great tool for drawing text over images without overcomplicating in tkinter.
+As mentioned earlier, I have only used python as that was the instructions for the game and markdown in this readme. I have used the following modules, libraries: pygame, system, random, time, PIL and tkinter. Pygame is used as the main gui which was somewhat difficult to grasp in the beginning but I would say that I can use it on a basic level without googling too much now. System is simply used for quitting the game, time is used for timing, tkinter which is a GUI I now found out to be extremely great as pygame has somewhat weird feautures that I do not like (disable keybuttons for whole pc and horrible userinput etc.) And lastly I used PIL which is a very great tool for drawing text over images without overcomplicating in tkinter.
 
 - <span style="color:#00CED1">Python</span>
 - <span style="color:#00CED1">Markdown</span>
