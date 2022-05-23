@@ -33,7 +33,6 @@ pygame.mixer.init()
 
 
 #pygame setup (inte säker på var detta ska ligga i koden enligt pep-8 standarden)
-vec = pygame.math.Vector2
 BOTTOM_PANEL = 150
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 400 + BOTTOM_PANEL
@@ -195,9 +194,9 @@ class Knight(pygame.sprite.Sprite):
         self.image = pygame.image.load("img/Knight/Player_Sprite_R.png")
         self.rect = self.image.get_rect()
         self.vx = 0
-        self.pos = vec((340, 240)) #pygame.math.vector2 is a 2d vector we can use to make the sprite move in a more "complex" or rather useful way, if you add on more feautres otherwise you can juse change the blit cords.                          
-        self.vel = vec(0, 0) #rakt                                                                                                 
-        self.acc = vec(0, 0)
+        self.pos = pygame.math.Vector2((340, 240)) #pygame.math.vector2 is a 2d vector we can use to make the sprite move in a more "complex" or rather useful way, if you add on more feautres otherwise you can juse change the blit cords.                          
+        self.vel = pygame.math.Vector2(0, 0) #rakt                                                                                                 
+        self.acc = pygame.math.Vector2(0, 0)
         self.direction = "RIGHT"
     
     def knight_drawing(self):
@@ -206,12 +205,14 @@ class Knight(pygame.sprite.Sprite):
 
     def knight_speed(self):
        #implementing newton, gravity, y cord
-      self.acc = vec(0,0.5)
+      self.acc = pygame.math.Vector2(0,0.5)
  
       # 
       if abs(self.vel.x) > 0.3:
-        """abs returns the absolute value, of course i found this on the guide but it is useful as the character can go with a negative x cordinate which makes -x = x
-        """
+        # abs returns the absolute value, 
+        # of course i found this on the guide but it is useful as the 
+        # echaracter can go with a negative x cordinate which makes -x = x
+        
         self.running = True
       else:
             self.running = False
@@ -278,8 +279,8 @@ class Knight(pygame.sprite.Sprite):
 
 
 
-    def gravity_check(self):
-        """very self explanatory method name but what it essentially does it that if they collide they will DIE if I change False to True. But the other part is that it checks if the knight/user is moving downwards and if he isnt jumping becomes false
+    def newton_gravity(self):
+        """What it does it that if they collide they will DIE if I change False to True. But the other part is that it checks if the knight/user is moving downwards and if he isnt jumping becomes false
         """
         hits = pygame.sprite.spritecollide(knight ,gnd_group, False)
         if self.vel.y > 0:
@@ -315,8 +316,8 @@ class Mobs(pygame.sprite.Sprite):
         self.hide = False
         self.image = pygame.image.load("img/Mobs/test.png")
         self.rect = self.image.get_rect()     
-        self.pos = vec(0, 0)
-        self.vel = vec(0, 0)
+        self.pos = pygame.math.Vector2(0, 0)
+        self.vel = pygame.math.Vector2(0, 0)
         self.direction = random.randint(0, 1) # 0 = right, 1 = left
         self.vel.x = random.randint(2, 6) / 2
         """This makes it look like goblin has its own movement because it is randomized.
@@ -359,14 +360,16 @@ class Mobs(pygame.sprite.Sprite):
 class EdgelordBoss(pygame.sprite.Sprite):
     def __init__(self):
         self.health = 500
+        self.defense = 300
+        self.dexterity = 0.5
         self.hide = False
         self.image = pygame.image.load("img/Mobs/edgelord_boss.png")
         self.rect = self.image.get_rect()
-        self.pos = vec(0, 0)
-        self.vel = vec(0, 0)
+        self.pos = pygame.math.Vector2(0, 0)
+        self.vel = pygame.math.Vector2(0, 0)
         self.direction = random.randint(0, 1)
-        self.vel.x = random.randint(2, 6) / 2
-        self.vel.y = random.randint(2, 6) / 2
+        self.vel.x = random.randint(2, 6) / 4
+        self.vel.y = random.randint(2, 6)
         
         if self.direction == 0:
             self.pos.x = 0
@@ -477,7 +480,7 @@ class WindowManager():
 
     #username label and text entry box
         usernameLabel = Label(self.tkwindow, text="Enter a username:").grid(row=0, column=0)
-        username = StringVar()#This is something I also found on a tutorial on youtube of which it is used because it makes it easier to use the value, username. This is something very commonly used when asking for a username 
+        username = StringVar()#makes it easier to use the value, username,
         usernameEntry = Entry(self.tkwindow, textvariable=username).grid(row=0, column=1)  #An entry shows a textline of the user can write down something and then save it.       
                                                                                                          
         
@@ -687,7 +690,7 @@ class WindowManager():
 
     def scene_6(self):
         self.tkwindow.destroy()
-        knight.gravity_check()
+        knight.newton_gravity()
         knight.knight_speed()
         mobs.update()
         mobs.move()
@@ -763,7 +766,7 @@ class EventHandler():
         self.stage_generator = 0
 
     def next_stage(self):
-        self.stage_generator +=1 #To see what stage we are at, this is something I personally was wowrking on to make it a easy way to make different scenes and then I realised I could just do this and set other requirements as well for changing scene, used later in code.
+        self.stage_generator +=1 #To see what stage we are at, this is something I personally was working on to make it a easy way to make different scenes and then I realised I could just do this and set other requirements as well for changing scene, used later in code.
 
 class SceneOne(pygame.sprite.Sprite):
     def sceneonebg(self):
@@ -911,7 +914,7 @@ s8 = SceneEight()
 
 #game loop
 if __name__ == "__main__":
-    hit_cooldown = pygame.USEREVENT + 1 #this is something I also straight up copied without really understanding at first in contrast to the movement part but I now realised it is used to create an "invincibility time" of where our character has a cooldown.
+    cd = pygame.USEREVENT + 1 #it is used to create an "invincibility time" of where our character has a cooldown.
     #This is used so that the user/player CAN NOT spam attack to deal infinite damage.
     m.maintheme()
     while True:
@@ -920,7 +923,7 @@ if __name__ == "__main__":
         bg.draw_bg1()
         gnd.draw_gnd2()
         lgnd.draw_gnd3()
-        knight.gravity_check()
+        knight.newton_gravity()
         knight.update()
         knight.knight_speed()
         knight.knight_drawing()
@@ -940,9 +943,9 @@ if __name__ == "__main__":
 
         CLOCK.tick(FPS)
         for event in pygame.event.get():
-            if event.type == hit_cooldown:
+            if event.type == cd:
                 knight.cooldown = False
-                pygame.time.set_timer(hit_cooldown, 0)
+                pygame.time.set_timer(cd, 0)
             if event.type == pygame.QUIT:
                 pygame.QUIT()
                 sys.exit()      
@@ -992,7 +995,7 @@ if __name__ == "__main__":
                 pygame.mixer.music.stop()
                 mgr.killgoblins()
                 s6.scenesixbg()
-                knight.gravity_check()
+                knight.newton_gravity()
                 knight.update()
                 knight.knight_speed()
                 knight.knight_drawing()
